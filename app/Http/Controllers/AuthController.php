@@ -256,10 +256,16 @@ class AuthController extends Controller
                     'remember_token'    => Str::random(60),
                     'google_id'         => $user->id,
                 ]);
+                
+                Mail::to($new_user->email)->send(new Welcome($new_user));
+
                 return redirect()->away(config('url.front_url').'/auth/social-callback/success?token='.auth('api')->fromUser($new_user));
             } catch (Exception $e) {
                 $update         =   User::where('email', $user->email)->update(['google_id' => $user->id]);  
                 $find_user      =   User::where('google_id', $user->id)->first();
+
+                Mail::to($find_user->email)->send(new Welcome($find_user));
+
                 return redirect()->away(config('url.front_url').'/auth/social-callback/success?token='.auth('api')->fromUser($find_user));
             }
         }
@@ -288,10 +294,16 @@ class AuthController extends Controller
                     'remember_token'    => Str::random(60),
                     'google_id'         => $user->id,
                 ]);
+
+                Mail::to($new_user->email)->send(new Welcome($new_user));
+                
                 return redirect()->away(config('url.front_url').'/auth/social-callback/success?token='.auth('api')->fromUser($new_user));
             } catch (Exception $e) {
                 $update         =   User::where('email', $user->email)->update(['google_id' => $user->id]);  
                 $find_user      =   User::where('google_id', $user->id)->first();
+
+                Mail::to($find_user->email)->send(new Welcome($find_user));
+
                 return redirect()->away(config('url.front_url').'/auth/social-callback/success?token='.auth('api')->fromUser($find_user));
             }
         }
