@@ -4,6 +4,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\Job\JobController;
+use App\Http\Controllers\Skill\SkillController;
 
 /*
 |--------------------------------------------------------------------------
@@ -41,7 +42,10 @@ Route::group([
     Route::get('/disconnectFacebook', [AuthController::class, 'disconnectFacebook']);
 });
 
-
 Route::group(['namespace' => 'Job'], function() {
     Route::get('/jobs/fetch', [JobController::class, 'fetch']);  
+});
+
+Route::group(['namespace' => 'Skill'], function() {
+    Route::post('/skills/search', [SkillController::class, 'search']);  
 });
